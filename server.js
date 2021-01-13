@@ -49,7 +49,7 @@ app.post('/pdf', (req, res) => {
   doc.pipe(fs.createWriteStream(path.join(__dirname, 'pdfs', pdfID+'.pdf')));
 
 
-  for (student of payload.students) {
+  for (let student of payload.students) {
     const generateSubjects = (() => {
       const randomNumber = () => Math.floor(Math.random() * (90 - 70)) + 70;
       
@@ -85,7 +85,7 @@ app.post('/pdf', (req, res) => {
         wordSpacing: 140
       })
 
-      for (key of Object.keys(generateSubjects)) {
+      for (let key of Object.keys(generateSubjects)) {
         doc
           .text(`${key}  ----->  ${generateSubjects[key]}`, {
             columns: 2,
@@ -107,7 +107,7 @@ app.get('/get-pdf/:id', (req, res) => {
   const id = req.params.id
   console.log(id)
 
-  res.sendFile(path.resolve(__dirname, id))
+  res.sendFile(path.resolve(__dirname, 'pdfs', id))
 })
 
 app.listen(PORT, ()=>console.log('server started on ', PORT))
